@@ -56,18 +56,19 @@ def dataframe_summary():
     numeric_col_index = np.where(dataset.dtypes != object)[0]
     numeric_col = dataset.columns[numeric_col_index].tolist()
 
-    means = dataset[numeric_col].mean(axis=0).tolist()
-    medians = dataset[numeric_col].median(axis=0).tolist()
-    stddevs = dataset[numeric_col].std(axis=0).tolist()
-
-    statistics = means
-    statistics.extend(medians)
-    statistics.extend(stddevs)
+    statistics = {}
+    for col in numeric_col:
+        statistics[col] = {
+            'mean': dataset[col].mean(),
+            'median': dataset[col].median(),
+            'std': dataset[col].std()
+        }
 
     logging.info("Statistics calculated successfully")
     logging.info("Summary statistics examined: {}".format(statistics))
 
     return statistics
+
 
 
 ##################Function to get missing data
@@ -90,21 +91,20 @@ def missing_data():
 ##################Function to get timings
 def execution_time():
     logging.info("Running execution_time function")
-    timing_measures = []
+    timing_measures = {}
 
-    start_time = timeit.default_timer()
-    os.system('python ingestion.py')
-    end_time = timeit.default_timer()
-    duration_step = end_time - start_time
-    timing_measures.append(duration_step)
-    logging.info("Ingestion.py executed successfully")
+    scripts = ['ingestion.py', 'training.py']
 
-    start_time = timeit.default_timer()
-    os.system('python training.py')
-    end_time = timeit.default_timer()
-    duration_step = end_time - start_time
-    timing_measures.append(duration_step)
-    logging.info("Training.py executed successfully")
+    for script in scripts:
+        start_time = timeit.default_timer()
+        os.system('python {}'.format(script))
+        end_time = timeit.default_timer()
+
+        duration_step = end_time - start_time
+        timing_measures[script] = duration_step
+
+        logging.info("{} executed successfully".format(script))
+
     logging.info("Execution time examined: {}".format(timing_measures))
 
     return timing_measures
