@@ -82,10 +82,14 @@ def missing_data():
     missing_data = dataset.isna().sum(axis=0)
     missing_data /= len(dataset) * 100
 
-    logging.info("Missing data calculated successfully")
-    logging.info("Missing data examined: {}".format(missing_data.tolist()))
+    # convert to dict
+    missing_data_dict = missing_data.to_dict()
 
-    return missing_data.tolist()
+    logging.info("Missing data calculated successfully")
+    logging.info(f"Missing data examined: {missing_data_dict}")
+
+    return missing_data_dict
+
 
 
 ##################Function to get timings
