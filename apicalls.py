@@ -27,7 +27,7 @@ responses = {'Predictions':response1.decode('utf-8'),
             'Diagnostics':response4.decode('utf-8')}
 
 #write the responses to your workspace
-filepath = os.path.join(model_path,'apireturns.txt')
+filepath = os.path.join(model_path,'apireturns2.txt')
 with open(filepath,'w') as f:
     f.write(json.dumps(responses))
 

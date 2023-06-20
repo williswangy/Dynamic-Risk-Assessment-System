@@ -45,7 +45,7 @@ def plot_confusion_matrix():
     plt.xlabel('Predicted')
     plt.ylabel('Truth')
     plt.title("Model Confusion Matrix")
-    plt.savefig(os.path.join(model_path, 'confusionmatrix.png'))
+    plt.savefig(os.path.join(model_path, 'confusionmatrix2.png'))
 
 
 def _get_statistics_df():
@@ -150,7 +150,7 @@ def generate_pdf_report():
     pdf.drawInlineImage(
         os.path.join(
             model_path,
-            'confusionmatrix.png'),
+            'confusionmatrix2.png'),
         40,
         150,
         width=300,
